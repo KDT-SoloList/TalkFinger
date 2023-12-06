@@ -24,16 +24,6 @@
                 color: black; 
                 border: 2px solid rgb(95, 205, 217);
             }
-            /* .colorButton {
-                background-color: rgb(95, 205, 217);
-                color: rgb(255, 255, 255);
-                border: none;
-                border-color: rgb(95, 205, 217);
-                padding: 10px;
-                font-size: 20px;
-                border-radius: 5px;
-                box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);        
-            } */
             .colorButton {
                 background-color: rgb(95, 205, 217); /* 배경색 변경 */
                 color: rgb(255, 255, 255); /* 글자색 변경 */
@@ -90,18 +80,18 @@
             </script>
         <div style="display: flex;">
             <img src="static\logo01-removebg-preview.png" alt="Prediction Image" style="width:20%; height:auto; margin-left: 15px;">
-            <input type="button" value="홈" onclick="location.reload()", class="whiteButton" style="height: 65px; margin-top: 10px;">
+            <input id="home" type="button" value="홈" onclick="location.reload()", class="whiteButton" style="height: 65px; margin-top: 10px;">
         </div>
 
         <center>
             <h1 style="margin-top: 75px;">수화 동영상을 업로드 해주세요!</h1>
             <!-- , style="display:none;" -->
-            <form action="predict" method="POST" enctype="multipart/form-data" onsubmit="showLoading()">
+            <form id="upload-form" action="predict" method="POST" enctype="multipart/form-data" onsubmit="showLoading()">
                 <label for="file-upload" class="whiteButton">
                     업로드
                 </label>
                 <input id="file-upload" type = "file" name="video", class="whiteButton", style="display:none;">
-                <input style="margin-left: 40px;" type = "submit" value="추론하기", class="colorButton">
+                <input id="submit-button" style="margin-left: 40px;" type = "submit" value="추론하기", class="colorButton">
                 <p id="file-name"style="font-size: 20px"></p>
             </form>
             <img id="thumbnail">           
@@ -122,13 +112,23 @@
             var fileUpload = document.getElementById('file-upload');
             var img = document.getElementById('thumbnail');
             var uploadClicked = false;
-    
+
             // 파일 업로드 이벤트 핸들러
             fileUpload.addEventListener('change', function(e) {
                 var file = e.target.files[0];
-                handleFile(file);
-                uploadClicked = true;
-                dropzone.style.display = 'none';
+                
+                if (e.target.files.length > 0) {
+                    handleFile(file);
+                    uploadClicked = true;
+                    dropzone.style.display = 'none';
+                } else {
+                    // 파일 선택이 취소된 경우, 썸네일과 파일 이름 삭제
+                    document.getElementById('file-name').textContent = '';
+                    document.getElementById('thumbnail').src = '';
+                    sessionStorage.removeItem('uploadedFileName');
+                    sessionStorage.removeItem('uploadedFileThumbnail');
+                    dropzone.style.display = 'block';
+                }
             });
     
             // 드래그 오버 이벤트 핸들러
@@ -141,6 +141,9 @@
                 e.preventDefault();  // 기본 동작을 취소
     
                 var file = e.dataTransfer.files[0];  // 드롭된 파일 가져오기
+                fileUpload.files = e.dataTransfer.files;  // input[type=file]에 파일 추가
+                
+
                 handleFile(file);
                 dropzone.style.display = 'none';
                 
@@ -153,6 +156,7 @@
     
                 // 파일 이름 표시
                 document.getElementById('file-name').textContent = file.name;
+                sessionStorage.setItem('uploadedFileName', file.name);
     
                 video.addEventListener('loadeddata', function() {
                     // 비디오의 원래 비율을 유지하면서 캔버스 크기를 조정
@@ -164,15 +168,59 @@
     
                     video.currentTime = 1;
                 }, false);
-    
+
                 video.addEventListener('seeked', function() {
                     // 캔버스의 크기를 비디오의 크기와 동일하게 설정
                     context.drawImage(video, 0, 0, canvas.width, canvas.height);
                     img.src = canvas.toDataURL();
+
+                    sessionStorage.setItem('uploadedFileThumnail', canvas.toDataURL());
                 });
     
                 video.src = URL.createObjectURL(file);
             }
+
+            // 페이지를 떠날 때 플래그 설정
+            window.addEventListener('beforeunload', function() {
+                sessionStorage.setItem('pageLeft', 'true');
+            });
+
+            window.onload = function() {
+                var pageLeft = sessionStorage.getItem('pageLeft');
+                // 새로고침 감지
+                var isRefresh = (performance.navigation.type === 1);
+
+                if (pageLeft === 'true' && !isRefresh) {
+                    var uploadedFileName = sessionStorage.getItem('uploadedFileName');
+                    var uploadedFileThumnail = sessionStorage.getItem('uploadedFileThumnail');
+
+                    if (uploadedFileName && uploadedFileThumnail) {
+                        dropzone.style.display = 'none';
+                        document.getElementById('file-name').textContent = uploadedFileName;
+                        document.getElementById("thumbnail").src = uploadedFileThumnail;
+                    }
+                } else {
+                    sessionStorage.removeItem('uploadedFileName');
+                    sessionStorage.removeItem('uploadedFileThumnail');
+                }
+                
+                sessionStorage.removeItem('pageLeft');
+                
+                if (sessionStorage.getItem('fromPredict') === 'true') {
+                    sessionStorage.removeItem('fromPredict');
+                    location.reload();
+                }
+
+                document.getElementById('home').addEventListener('click', function() {
+                    sessionStorage.removeItem('pageLeft');
+                    sessionStorage.removeItem('uploadedFileName');
+                    sessionStorage.removeItem('uploadedFileThumnail');
+                    location.reload();
+                });
+            };
+
+            
+
         </script>
 
         <div id="loading" style="display:none;">
