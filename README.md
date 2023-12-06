@@ -1,4 +1,6 @@
+![logo01-removebg-preview](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/e3647eff-70bf-49b4-8859-3f83a543da3e)
 # TalkFinger
+
 Intel 인공지능 인재양성과정 서울 1기 OenVino 팀프로젝트
 
 
@@ -33,3 +35,6 @@ Intel 인공지능 인재양성과정 서울 1기 OenVino 팀프로젝트
 - 출력된 추론값은 TTS를 이용하여 소리로 변환하여 출력
 #### 
 - 구현된 웹에 동영상을 업로드하면 해당 동영상이 서버로 전송되어 추론값이 텍스트로 변환되어 웹 페이지에 출력
+
+![99FACF405EA007EB31](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/04297488-4019-430d-bdda-f598b52e13ce)
+
