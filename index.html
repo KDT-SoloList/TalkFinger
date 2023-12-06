@@ -71,11 +71,15 @@
     </head>
     <body>
         <script>
-            window.onload = function() {
+            function checkFromPredictAndReload() {
                 if (sessionStorage.getItem('fromPredict') === 'true') {
                     sessionStorage.removeItem('fromPredict');  // 플래그를 제거합니다.
                     location.reload();  // 페이지를 초기화합니다.
                 }
+            }
+
+            window.onload = function() {
+                checkFromPredictAndReload();    
             };
             </script>
         <div style="display: flex;">
@@ -206,10 +210,7 @@
                 
                 sessionStorage.removeItem('pageLeft');
                 
-                if (sessionStorage.getItem('fromPredict') === 'true') {
-                    sessionStorage.removeItem('fromPredict');
-                    location.reload();
-                }
+                checkFromPredictAndReload();
 
                 document.getElementById('home').addEventListener('click', function() {
                     sessionStorage.removeItem('pageLeft');
@@ -218,9 +219,6 @@
                     location.reload();
                 });
             };
-
-            
-
         </script>
 
         <div id="loading" style="display:none;">
