@@ -36,5 +36,6 @@ Intel 인공지능 인재양성과정 서울 1기 OenVino 팀프로젝트
 #### 
 - 구현된 웹에 동영상을 업로드하면 해당 동영상이 서버로 전송되어 추론값이 텍스트로 변환되어 웹 페이지에 출력
 
-![99FACF405EA007EB31](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/04297488-4019-430d-bdda-f598b52e13ce)
+![99FACF405EA007EB31](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/8b0f4bfb-3a83-4f97-a5f9-2947e667c5e8)
+
 
