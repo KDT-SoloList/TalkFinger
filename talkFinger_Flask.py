@@ -8,7 +8,7 @@ from collections import deque
 app = Flask(__name__)
 
 #모델 경로 적절하게 변경
-model_path = "C:\\Users\\yooji\\python_AI\\openvino_project\\quantized_talkFinger\\quantized_talkFinger.xml"
+model_path = "C:\\Users\\your_address\\quantized_talkFinger.xml"
 ie = IECore()
 net = ie.read_network(model=model_path)
 exec_net = ie.load_network(network=net, device_name='CPU')
@@ -69,4 +69,4 @@ def predict():
     
 if __name__ == '__main__':
     # cmd -> ipconfig -> IPv4 주소
-    app.run(host='192.168.1.20', port=5000, debug=True)
+    app.run(host='your_ip', port=5000, debug=True)
