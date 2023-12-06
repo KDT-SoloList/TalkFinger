@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>수화 추론 프로그램</title>
+        <style>
+            .whiteButton {
+                background-color: rgb(255, 255, 255);
+                color: rgb(11, 11, 11);
+                border: none;
+                border-color: rgb(225, 225, 225);
+                font-size: 20px; /* 글꼴 크기 변경 */
+                padding: 15px 25px; /* 패딩 */
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                margin: 4px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
+                box-shadow: 5px 3px 5px 0px rgba(0,0,0,0.1); /* 그림자 추가 */
+                border-radius: 5px; 
+            }
+            .whiteButton:hover {
+                background-color: white; 
+                color: black; 
+                border: 2px solid rgb(95, 205, 217);
+            }
+            /* .colorButton {
+                background-color: rgb(95, 205, 217);
+                color: rgb(255, 255, 255);
+                border: none;
+                border-color: rgb(95, 205, 217);
+                padding: 10px;
+                font-size: 20px;
+                border-radius: 5px;
+                box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);        
+            } */
+            .colorButton {
+                background-color: rgb(95, 205, 217); /* 배경색 변경 */
+                color: rgb(255, 255, 255); /* 글자색 변경 */
+                border: none;
+                border-color: rgb(95, 205, 217);
+                font-size: 25px; /* 글꼴 크기 변경 */
+                padding: 12px 23px; /* 패딩 */
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                margin: 4px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
+                box-shadow: 5px 3px 5px 0px rgba(0,0,0,0.1); /* 그림자 추가 */
+                border-radius: 5px;
+                font-weight: bold;
+            }
+            .colorButton:hover {
+                background-color: white; 
+                color: rgb(95, 205, 217); 
+                border: 2px solid rgb(95, 205, 217);
+            }
+            @keyframes slideDownUp {
+                0% {
+                    top: -50%;
+                }
+                100% {
+                    top: 13%;
+                }
+            }
+            #loading {
+                position: absolute;
+                top: -50%;  /* 버튼 위에 위치 */
+                left: 50%; /* 페이지 중앙에 위치 */
+                transform: translate(-50%, -50%); /* 위치 조정 */
+                display: none; /* 기본적으로 숨김 */
+                animation: slideDownUp 2s ease-in-out; /* 애니메이션 적용 */
+            }
+        </style>
+        <script>
+            function showLoading() {
+                document.getElementById('loading').style.display = 'block';
+            }
+        </script>
+    </head>
+    <body>
+        <script>
+            window.onload = function() {
+                if (sessionStorage.getItem('fromPredict') === 'true') {
+                    sessionStorage.removeItem('fromPredict');  // 플래그를 제거합니다.
+                    location.reload();  // 페이지를 초기화합니다.
+                }
+            };
+            </script>
+        <div style="display: flex;">
+            <img src="static\logo01-removebg-preview.png" alt="Prediction Image" style="width:20%; height:auto; margin-left: 15px;">
+            <input type="button" value="홈" onclick="location.reload()", class="whiteButton" style="height: 65px; margin-top: 10px;">
+        </div>
+
+        <center>
+            <h1 style="margin-top: 75px;">수화 동영상을 업로드 해주세요!</h1>
+            <!-- , style="display:none;" -->
+            <form action="predict" method="POST" enctype="multipart/form-data" onsubmit="showLoading()">
+                <label for="file-upload" class="whiteButton">
+                    업로드
+                </label>
+                <input id="file-upload" type = "file" name="video", class="whiteButton", style="display:none;">
+                <input style="margin-left: 40px;" type = "submit" value="추론하기", class="colorButton">
+                <p id="file-name"style="font-size: 20px"></p>
+            </form>
+            <img id="thumbnail">           
+        </center>
+        
+        <footer style="position: fixed; left: 0; right: 0; bottom: 0; text-align: center; line-height: 0.5;">
+            <p>2023.11.22 ~ 2023.12.06</p>
+            <p>Intel 인공지능 인재양성 과정 서울 1기 openVINO 프로젝트 3팀 쏠로리스트 김종대, 손민희, 손현태, 이성택, 최유진</p>
+            <p>이미지 출처: <a href="https://www.freepik.com/vectors/technology">Technology vector created by stories - www.freepik.com</a></p>
+        </footer>
+
+        <div id="dropzone" style="text-align: center; font-weight: bold;">
+            <p>또는 파일을 드래그 해주세요.</p>
+            <img src="static\add-button64.png" alt="Drag and drop image">
+        </div>
+
+        <script>
+            var fileUpload = document.getElementById('file-upload');
+            var img = document.getElementById('thumbnail');
+            var uploadClicked = false;
+    
+            // 파일 업로드 이벤트 핸들러
+            fileUpload.addEventListener('change', function(e) {
+                var file = e.target.files[0];
+                handleFile(file);
+                uploadClicked = true;
+                dropzone.style.display = 'none';
+            });
+    
+            // 드래그 오버 이벤트 핸들러
+            document.body.addEventListener('dragover', function(e) {
+                e.preventDefault();  // 기본 동작을 취소하여 파일 드롭을 허용
+            });
+    
+            // 드롭 이벤트 핸들러
+            document.body.addEventListener('drop', function(e) {
+                e.preventDefault();  // 기본 동작을 취소
+    
+                var file = e.dataTransfer.files[0];  // 드롭된 파일 가져오기
+                handleFile(file);
+                dropzone.style.display = 'none';
+                
+            });
+    
+            function handleFile(file) {
+                var video = document.createElement('video');
+                var canvas = document.createElement('canvas');
+                var context = canvas.getContext('2d');
+    
+                // 파일 이름 표시
+                document.getElementById('file-name').textContent = file.name;
+    
+                video.addEventListener('loadeddata', function() {
+                    // 비디오의 원래 비율을 유지하면서 캔버스 크기를 조정
+                    var ratio = video.videoWidth / video.videoHeight;
+                    var canvasWidth = 400;
+    
+                    canvas.width = canvasWidth;
+                    canvas.height = canvasWidth / ratio;
+    
+                    video.currentTime = 1;
+                }, false);
+    
+                video.addEventListener('seeked', function() {
+                    // 캔버스의 크기를 비디오의 크기와 동일하게 설정
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    img.src = canvas.toDataURL();
+                });
+    
+                video.src = URL.createObjectURL(file);
+            }
+        </script>
+
+        <div id="loading" style="display:none;">
+            <div style="text-align: center; margin-top: 20%;">
+                <!-- 로딩 애니메이션 -->
+                <div style="margin-bottom: 20px;">
+                    <svg width="50px" height="50px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                        <circle cx="50" cy="50" r="32" stroke-width="8" stroke="#3498db" stroke-dasharray="50.26548245743669 50.26548245743669" fill="none" stroke-linecap="round">
+                            <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+                        </circle>
+                    </svg>
+                </div>
+                <!-- "로딩 중..." 텍스트 -->
+                <p style="font-size: 20px; color: #333;">로딩 중...</p>
+            </div>
+        </div>
+
+    </body>
+</html>
