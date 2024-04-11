@@ -36,6 +36,16 @@ Intel 인공지능 인재양성과정 서울 1기 OenVino 팀프로젝트
 #### 
 - 구현된 웹에 동영상을 업로드하면 해당 동영상이 서버로 전송되어 추론값이 텍스트로 변환되어 웹 페이지에 출력
 
+## 📷 웹 구현 스크린샷
+![구현 사진1](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/9b71b517-c0b4-4403-bd7c-2ada30f32c34) |![구현 사진2](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/a7672849-291a-4a5f-8dde-40fd37542a6a)
+--- | --- |
+![구현 사진3](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/d61ed570-d665-4dab-b179-14d94a3c47bb) |![구현 사진4](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/bc104295-b23b-4d7c-87f4-72b2dd1a0ce9)
+![구현 사진5](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/453e89b3-304e-4776-8887-6ef7222ecca7)
+
+
+https://github.com/KDT-SoloList/TalkFinger/assets/139525941/5046f28a-1ec0-48dd-92f6-df3d9c4b596b
+
+
 ![99FACF405EA007EB31](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/8b0f4bfb-3a83-4f97-a5f9-2947e667c5e8)
 
 
