@@ -45,7 +45,7 @@ Intel 인공지능 인재양성과정 서울 1기 OenVino 팀프로젝트
 ### 동영상
 https://github.com/KDT-SoloList/TalkFinger/assets/139525941/5046f28a-1ec0-48dd-92f6-df3d9c4b596b
 
-[웹 부분의 시연 영상](https://youtu.be/ba61m5k96Ho) 유투브 링크입니다.  
+[웹 부분의 시연 영상](https://youtu.be/ba61m5k96Ho) 유튜브 링크도 같이 올립니다.  
 https://youtu.be/ba61m5k96Ho
 
 ![99FACF405EA007EB31](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/8b0f4bfb-3a83-4f97-a5f9-2947e667c5e8)
