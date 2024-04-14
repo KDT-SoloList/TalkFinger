@@ -42,10 +42,11 @@ Intel 인공지능 인재양성과정 서울 1기 OenVino 팀프로젝트
 ![구현 사진3](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/d61ed570-d665-4dab-b179-14d94a3c47bb) |![구현 사진4](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/bc104295-b23b-4d7c-87f4-72b2dd1a0ce9)
 ![구현 사진5](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/453e89b3-304e-4776-8887-6ef7222ecca7)
 
-
+### 동영상
 https://github.com/KDT-SoloList/TalkFinger/assets/139525941/5046f28a-1ec0-48dd-92f6-df3d9c4b596b
 
-[웹 시연 영상 유튜브 링크](https://youtu.be/ba61m5k96Ho)
+[웹 부분의 시연 영상](https://youtu.be/ba61m5k96Ho) 유투브 링크입니다.  
+https://youtu.be/ba61m5k96Ho
 
 ![99FACF405EA007EB31](https://github.com/KDT-SoloList/TalkFinger/assets/139525941/8b0f4bfb-3a83-4f97-a5f9-2947e667c5e8)
 
